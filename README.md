@@ -1,6 +1,7 @@
 # ears
 The Super-Charged Event Listener
 
+`
 window.ears = window.ears || [];
 window.ears.push(['load', 'id', (e) => { console.log(e); }, { "startup": true, "once": true }]);
 
@@ -21,3 +22,4 @@ window.ears.push([
     ['dragholding', 'id', (e) => { console.log(e); }, opt],
     ['swipeholding', 'id', (e) => { console.log(e); }, opt]
 ]);
+`
