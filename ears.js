@@ -1,5 +1,12 @@
 'use strict';
 
+/*
+KnowCSS Version 1.0.0 by Jay Doublay
+https://www.jaydoublay.com/
+
+Repo: https://github.com/knowcss/ears
+*/
+
 const startUp = new Date().getTime();
 
 const config = {
