@@ -26,7 +26,7 @@ window.ears.push(['load', callBack, { "startup": true, "once": true }]);
 window.ears.push(['click', 'clickid', () => { $ears().off('click', clickid'); }]);
 
 // create many listeners with varying options and targets (body is default target)
-// the first 2 arguments must be unique to avoid overwriting an existing event with the same event type and id.
+// the first 2 arguments must be unique to avoid overwriting an existing event.
 // if id as the 2nd argument is excluded, then id defaults to an incremental counter to avoid event overwriting
 window.ears.push([
     ['scroll', 'id', callBack, { rate: 100 }],
