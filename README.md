@@ -19,9 +19,14 @@ const domReady = (e) => {
 const callBack = (e) => { console.log(e); };
 
 // push 1 listener, execute on $ears startup, only run once
-window.ears.push(['load', 'id', callBack, { "startup": true, "once": true }]);
+window.ears.push(['load', callBack, { "startup": true, "once": true }]);
+
+// include an id as the 2nd argument to later remove by the same id.
+window.ears.push(['click', 'clickid', () => { $ears().off('click', clickid'); }]);
 
 // create many listeners with varying options and targets (body is default target)
+// the first 2 arguments must be unique to avoid overwriting an existing event with the same event type and id.
+// if id as the 2nd argument is excluded, then id defaults to an incremental counter to avoid event overwriting
 window.ears.push([
     ['scroll', 'id', callBack, { rate: 100 }],
     ['click', 'id', callBack, { target: '.row' } ],
@@ -33,11 +38,11 @@ window.ears.push([
     ['render', 'id', callBack, opt],
     ['hover', 'id', callBack, opt],
     ['mouse', 'id', callBack, opt],
-    ['press', 'id', callBack, opt],
-    ['unpress', 'id', callBack, opt],
+    ['press', callBack, opt],
+    ['unpress', 'callBack, opt],
     ['resize', 'id', callBack, { rate: 250 }],
-    ['click', 'id', (e) => { console.log('next slide'); }, { target: '.next', key: 39 }],
-    ['click', 'id', (e) => { console.log('previous slide'); }, { target: '.prev', key: 37 }],
+    ['click', 'nextid', (e) => { console.log('next slide'); }, { target: '.next', key: 39 }],
+    ['click', 'previd', (e) => { console.log('previous slide'); }, { target: '.prev', key: 37 }],
     ['dragholding', 'id', callBack, { mobile: false }],
     ['swipeholding', 'id', callBack, { desktop: false }]
 ]);
