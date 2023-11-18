@@ -22,6 +22,7 @@ const callBack = (e) => { console.log(e); };
 window.ears.push(['load', callBack, { "startup": true, "once": true }]);
 
 // include an id as the 2nd argument to later remove by the same id.
+// the callback will only execute when DOM and $ears are ready.
 window.ears.push(['click', 'clickid', () => { $ears().off('click', clickid'); }]);
 
 // create many listeners with varying options and targets (body is default target)
