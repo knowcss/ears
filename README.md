@@ -48,7 +48,8 @@ window.ears.push([
     ['swipeholding', 'id', callBack, { desktop: false }]
 ]);
 
-// custom events may be created that group many events into a single eventlistener. $ears has a default starter set in userGroupHandlers - add your own!
+// custom events may be created that group many events into a single eventlistener.
+// $ears has a default starter set in userGroupHandlers - add your own!
 const userGroupHandlers = {
     'user': ['blur', 'click', 'contextmenu', 'dblclick', 'focus', 'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'mousewheel', 'submit', 'touchcancel', 'touchend', 'touchmove', 'touchstart', 'DOMMouseScroll', 'MozMousePixelScroll'],
     'touch': ['touchcancel', 'touchend', 'touchmove', 'touchstart'],
