@@ -1,7 +1,7 @@
 'use strict';
 
 /*
-KnowCSS Version 1.0.0 by Jay Doublay
+Ears Version 1.0.0 by Jay Doublay
 https://www.jaydoublay.com/
 
 Repo: https://github.com/knowcss/ears
@@ -161,7 +161,15 @@ const listen = {
     },
     execute: function (key, handlers, id, callback, options) {
         if (typeof handlers == 'object' && typeof handlers[0] !== 'object') { handlers = [handlers]; } // single push()
-        else if (id) { handlers = [handlers, id, callback, options]; } // direct call
+        else if (Array.isArray(handlers)) {}
+        else if (id || typeof handlers === 'string') {
+	    	if (id && typeof id === 'function') {
+	    		options = callback;
+	    		callback = id;
+	    		id = null;
+	    	}
+	    	handlers = [[handlers, id, callback, options]];
+	    }
         return key in this ? this[key](handlers) : false;
     }
 }
@@ -174,11 +182,17 @@ earsProto.prototype = {
             earsReady = true;
             window.ears = window.ears || [];
             if (window.ears.length > 0) {
-                while (window.ears.length > 0) { $ears().add(window.ears.shift()); }
+            	var value = null;
+                while (window.ears.length > 0) {
+                	value = window.ears.shift();
+                	if (value && value.length > 0) { $ears().add(value); }
+	            }
             }
             window.ears = new Proxy(window.ears, {
                 set: function (target, property, value) {
-                    if (typeof value === 'object' && value != null) { $ears().add(value); }
+                    if (typeof value === 'object' && value != null) {
+                    	if (value && value.length > 0) { $ears().add(value); }
+                    }
                     else { target[property] = value; }
                     return true;
                 }
@@ -606,8 +620,16 @@ const earsEngine = {
         }
         return ret;
     },
+    multiEventString: (str) => {
+    	if (typeof str === 'string') {
+    		if (str.indexOf(',') > -1) { str = str.split(','); }
+    		else if (str.indexOf(' ') > -1) { str = str.split(' '); }
+    		else { str = [str]; }
+    	}
+    	return str || [];
+    },
     addHandlerDo: function (handlerArray, id, callback, options) {
-        if (typeof handlerArray === 'string') { handlerArray = [handlerArray]; }
+    	handlerArray = this.multiEventString(handlerArray);
         var usedOptions = JSON.parse(JSON.stringify(optionsDefault));
         if (typeof options !== 'undefined' && options != null) {
             if (('target' in options && options.target != null && options.target.length > 0) || ('targets' in options && options.targets != null && options.targets.length > 0)) {
@@ -675,7 +697,7 @@ const earsEngine = {
         }
     },
     removeHandlerDo: function (handlerArray, id) {
-        if (typeof handlerArray === 'string') { handlerArray = [handlerArray]; }
+	    handlerArray = this.multiEventString(handlerArray);
         var handler = '';
         for (var i = 0; i < handlerArray.length; i++) {
             handler = handlerArray[i];
