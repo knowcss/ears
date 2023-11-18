@@ -1,5 +1,7 @@
 # ears
-The Super-Charged Event Listener
+The Super-Charged Event Listener.
+
+ears.js adds many features not natively available in addEventListener/removeEventListener: platform/environment/device/screensize targeting, grouped events, rate limiting, flood management, delayed triggers, easy keyboard binding, swipe/drag/hold detection, user vs bot detection, easy on/off management, lazy-load events, double event firing protection, automatic addition/removal events for elements that appear and vanish in DOM.
 
 ```
 window.ears = window.ears || [];
